@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </head>
+  <body>
+
+
+<div class="container">
+ <a class="btn btn-primary btn-lg" href="/"> <i class="fa fa-home"></i> </a>
+
+  <h2><%= title %></h2>
+<br><br>
+<% if(success != '') { %>
+
+<div class="alert alert-success">
+  <strong>Success!</strong> <%= success %>
+</div>
+<% } %>
+
+  <form class="form-inline" action="/search/" method="post">
+    <div class="form-group">
+      <label for="name">By Name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter name" name="filtername">
+    </div>
+    <div class="form-group">
+      <label for="email">By Email::</label>
+      <input type="text" class="form-control" id="email" placeholder="Enter email" name="filteremail">
+    </div>
+    <div class="form-group">
+      <select class="form-control" id="etype" name="filteretype">
+        <option>Hour</option>
+        <option>Fixed</option>
+      </select>
+  </div>
+</div>
+    </div>
+    <button style="margin-left: 700px; margin-top:-50px" type="submit" class="btn btn-default">Search..</button>
+  </form>
+<br>  
+<br><br>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>etype</th>
+        <th>hourrately</th>
+        <th>hourtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (records.length > 0) { %>
+      <% records.forEach(function(row){ %>
+      <tr>
+        <td><%= row.name %></td>
+        <td><%= row.email %></td>
+        <td><%= row.etype %></td>
+        <td><%= row.hourlyrate %></td>
+        <td><%= row.totalhour %></td>
+        <td> 
+          <a class="btn btn-primary btn-xs" href="/edit/<%=row._id %>"> <i class="fa fa-edit"></i> </a>  
+          <a class="btn btn-danger btn-xs" href="/delete/<%=row._id %>"> <i class="fa fa-trash"></i> </a>  
+          
+        </td>
+      </tr>
+      <% })} else{ %>
+        <tr>
+          <td colspan="6"> No record found </td>
+        </tr>
+        <% }%>
+    </tbody>
+  </table>
+</div>
+
+<form class="form-inline" action="/" method="post" style="margin-top:70px;">
+  <div class="form-group">
+    <label for="name">name:</label>
+    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+  </div> 
+  <div class="form-group">
+    <select class="form-control" id="etype" name="etype">
+      <option>Hour</option>
+      <option>Fixed</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="hourlyrate">hourlyrate:</label>
+    <input type="text" class="form-control" id="hourlyrate" placeholder="Enter hourlyrate" name="hourlyrate">
+  </div> 
+  <div class="form-group">
+    <label for="totalhour">totalhour:</label>
+    <input type="text" class="form-control" id="totalhour" placeholder="Enter totalhour" name="totalhour">
+  </div>
+  <button type="submit" class="btn btn-default">Add Record</button>
+</form>
+
+<!-- 
+<div class="container">
+  <div class="row">
+    <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">Employee Details Form</div>
+        </div>
+        <div class="panel-body">
+          <form action="/" id="EmployeeForm" class="form-horizontal" method="post" role="form"
+            enctype="multipart/form-data">
+
+            <div id="signupalert" style="display:none" class="alert alert-danger">
+              <p>Error:</p>
+              <span></span>
+            </div>
+
+            <div class="form-group">
+              <label for="firstname" class="col-md-3 control-label">Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="uname" placeholder="Enter Your Name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="col-md-3 control-label">Email</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="email" placeholder="Email Address">
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="lastname" class="col-md-3 control-label">Employee Type</label>
+              <div class="col-md-9">
+                <select class="form-control" name="emptype">
+                  <option value="Hourly">Hourly</option>
+                  <option value="Fixed">Fixed</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-md-3 control-label">Hourly Rate</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="hrlyrate" placeholder="Enter Hourly Rate">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="icode" class="col-md-3 control-label"> Total Hour</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" name="ttlhr" placeholder="Enter Total Hours">
+              </div>
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="icode" class="col-md-3 control-label"> Profile Image</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control" name="file">
+              </div>
+            </div> -->
+
+            <!-- <div class="form-group">
+              
+              <div class="col-md-offset-3 col-md-9">
+                <input type="submit" name="submit" value="submit" class="btn btn-primary">
+              </div>
+            </div>
+
+
+
+
+
+          </form>
+        </div>
+      </div>  -->
+
+  </body>
+</html>
